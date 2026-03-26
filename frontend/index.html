@@ -536,7 +536,7 @@
 /* ═══════════════════════════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════════════════════════ */
-const API = 'http://localhost:8000';
+const API = window.location.origin;
 let token = localStorage.getItem('nm_token') || '';
 let refreshTimer, countdownTimer, cdVal = 10;
 let latencyChartInst = null, uptimeChartInst = null;

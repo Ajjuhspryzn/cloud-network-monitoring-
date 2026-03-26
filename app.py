@@ -11,6 +11,7 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 import database as db
@@ -183,7 +184,12 @@ def device_logs(device_id: int, limit: int = 60, _: str = Depends(get_current_us
     return DeviceLogsResponse(device=device_info, logs=log_entries, uptime_pct=uptime)
 
 
-# ── Health check (no auth required) ─────────────────────────────────────────
+# ── System endpoints (no auth required) ──────────────────────────────────────
+
+@app.get("/", tags=["System"])
+def serve_frontend():
+    """Serve the frontend dashboard."""
+    return FileResponse("frontend/index.html")
 
 @app.get("/health", tags=["System"])
 def health():
